@@ -5,16 +5,58 @@
 
 using namespace std;
 
+
+// ================= USERNAME VALIDATION =================
+
+bool User::validUsername(string username)
+{
+    // Minimum 4 characters
+    if (username.length() < 4)
+        return false;
+
+    // Check every character
+    for (char ch : username)
+    {
+        // Only letters, numbers and underscore allowed
+        if (!isalnum(ch) && ch != '_')
+            return false;
+    }
+
+    return true;
+}
+
+
+// ================= REGISTRATION =================
+
 void User::registerUser()
 {
     string confirmPassword;
 
     cout << "\n========== Registration ==========\n";
 
-    cout << "Enter username: ";
-    cin >> username;
+    // ---------- Username Validation ----------
 
-    // Check whether username already exists
+    while (true)
+    {
+        cout << "Enter username: ";
+        cin >> username;
+
+        if (!validUsername(username))
+        {
+            cout << "\nInvalid username!\n";
+            cout << "Username must:\n";
+            cout << "- Have at least 4 characters\n";
+            cout << "- Contain only letters, numbers or _\n\n";
+
+            continue;
+        }
+
+        break;
+    }
+
+
+    // ---------- Check Duplicate Username ----------
+
     ifstream checkFile("user.txt");
 
     string fileUser, filePass;
@@ -23,7 +65,7 @@ void User::registerUser()
     {
         if (username == fileUser)
         {
-            cout << "Username already exists!\n";
+            cout << "\nUsername already exists!\n";
             checkFile.close();
             return;
         }
@@ -31,7 +73,9 @@ void User::registerUser()
 
     checkFile.close();
 
-    // Password validation
+
+    // ---------- Password Validation ----------
+
     while (true)
     {
         cout << "\nPassword requirements:\n";
@@ -77,7 +121,9 @@ void User::registerUser()
         cout << "Please enter a stronger password.\n";
     }
 
-    // Confirm password
+
+    // ---------- Confirm Password ----------
+
     while (true)
     {
         cout << "Confirm password: ";
@@ -92,7 +138,9 @@ void User::registerUser()
         cout << "Please try again.\n";
     }
 
-    // Save user
+
+    // ---------- Save User ----------
+
     ofstream file("user.txt", ios::app);
 
     if (!file)
@@ -108,6 +156,8 @@ void User::registerUser()
     cout << "\nRegistration Successful!\n";
 }
 
+
+// ================= LOGIN =================
 
 bool User::login()
 {
