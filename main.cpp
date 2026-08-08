@@ -1,4 +1,5 @@
 #include <iostream>
+#include <limits>
 #include "User.h"
 #include "Encryption.h"
 
@@ -12,21 +13,32 @@ int main()
     do
     {
         cout << "\n========== Secure Data Vault ==========" << endl;
-        cout << "1.Register" << endl;
-        cout << "2.Login" << endl;
-        cout << "3.Exit" << endl;
+        cout << "1. Register" << endl;
+        cout << "2. Login" << endl;
+        cout << "3. Exit" << endl;
         cout << "Enter your choice: ";
-        cin >> n;
+
+        if (!(cin >> n))
+        {
+            cout << "Invalid choice!\n";
+
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+            continue;
+        }
+
         switch (n)
         {
         case 1:
             u.registerUser();
             break;
-            
+
         case 2:
             if (u.login())
             {
                 int choice;
+
                 do
                 {
                     cout << "\n===== Dashboard =====\n";
@@ -34,7 +46,16 @@ int main()
                     cout << "2. Decrypt Data\n";
                     cout << "3. Logout\n";
                     cout << "Enter your choice: ";
-                    cin >> choice;
+
+                    if (!(cin >> choice))
+                    {
+                        cout << "Invalid choice!\n";
+
+                        cin.clear();
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+                        continue;
+                    }
 
                     switch (choice)
                     {
@@ -63,9 +84,10 @@ int main()
             break;
 
         default:
-            cout << "Invalid choice!";
+            cout << "Invalid choice!" << endl;
             break;
         }
+
     } while (n != 3);
 
     return 0;
