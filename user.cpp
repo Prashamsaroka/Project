@@ -185,6 +185,8 @@ bool User::login()
     {
         if (user == fileUser && pass == filePass)
         {
+            username=user; // Set the username for the logged-in user
+            password=pass; // Set the password for the logged-in user
             cout << "Login Successful!\n";
             file.close();
             return true;

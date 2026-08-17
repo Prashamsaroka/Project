@@ -1,6 +1,6 @@
 #include <iostream>
 #include <limits>
-#include "User.h"
+#include "user.h"
 #include "Encryption.h"
 
 using namespace std;
@@ -9,7 +9,6 @@ int main()
 {
     int n;
     User u;
-
     do
     {
         cout << "\n========== Secure Data Vault ==========" << endl;
@@ -37,8 +36,8 @@ int main()
         case 2:
             if (u.login())
             {
+                Encryption e(u.getUsername()); // Pass the logged-in username to Encryption
                 int choice;
-
                 do
                 {
                     cout << "\n===== Dashboard =====\n";
@@ -56,15 +55,16 @@ int main()
 
                         continue;
                     }
-
                     switch (choice)
                     {
                     case 1:
                         // Encrypt
+                         e.encryptdata();
                         break;
 
                     case 2:
                         // Decrypt
+                        e.decryptdata();
                         break;
 
                     case 3:

@@ -6,9 +6,18 @@ using namespace std;
 
 class Encryption
 {
+private:
+    string activeUsername;
+
 public:
-    string encrypt(string text, int key);
-    string decrypt(string text, int key);
+    Encryption();
+    Encryption(string username);
+
+    string Encrypt(string text, string userkey);
+    string Decrypt(string text, string userkey);
+
+    void encryptdata();
+    void decryptdata();
 };
 
 #endif

@@ -13,6 +13,10 @@ private:
 public:
     void registerUser();
     bool login();
+    string getUsername() const
+     { 
+        return username;
+     }
 };
 
 #endif
